@@ -1,0 +1,40 @@
+{
+    "name": "typescript-glslminify-transformer",
+    "version": "0.0.1",
+    "description": "typescript transformer that minify glsl string",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "npm run lint && npm run build && npm run test",
+        "build": "ts-node publishScript.ts",
+        "test": "cd test && npm run build",
+        "lint": "eslint --ext .ts,.tsx . --fix --cache"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/noname0310/typescript-glslminify-transformer.git"
+    },
+    "author": "noname0310",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/noname0310/typescript-glslminify-transformer/issues"
+    },
+    "homepage": "https://github.com/noname0310/typescript-glslminify-transformer#readme",
+    "devDependencies": {
+        "@types/node": "^20.10.4",
+        "@typescript-eslint/eslint-plugin": "^6.13.2",
+        "@typescript-eslint/parser": "^6.13.2",
+        "eslint": "^8.55.0",
+        "eslint-plugin-simple-import-sort": "^10.0.0",
+        "ts-node": "^10.9.1",
+        "ts-patch": "^3.1.1",
+        "typescript": "^5.3.3",
+        "typescript-transform-paths": "^3.4.6"
+    },
+    "keywords": [
+        "webgl",
+        "glsl",
+        "typescript",
+        "transformer"
+    ],
+    "sideEffects": false
+}
