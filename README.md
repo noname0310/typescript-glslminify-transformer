@@ -15,9 +15,7 @@ add following to `tsconfig.json`
 ```json
 {
     "compilerOptions": {
-        "plugins": [
-            { "transform": "typescript-glslminify-transformer" }
-        ]
+        "plugins": [ { "transform": "typescript-glslminify-transformer" } ]
     }
 }
 ```
@@ -29,6 +27,8 @@ tspc
 ```
 
 ## Example
+
+every string literal with `/* glsl */` comment will be minified
 
 ```typescript
 const glslString = /* glsl */ "gl_FragColor = vec4(vUv, 0.0, 1.0);";

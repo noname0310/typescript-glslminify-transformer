@@ -27,12 +27,11 @@
             { "transform": "typescript-transform-paths" },
             { "transform": "typescript-transform-paths", "afterDeclarations": true }
         ],
-        "outDir": "./dist",
+        "outDir": "./dist/src",
         "declaration": true
     },
-    "exclude": [
-        "dist",
-        "test"
+    "include": [
+        "src/**/*"
     ],
     "ts-node": {
         "compilerOptions": {

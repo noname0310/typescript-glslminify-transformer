@@ -6,6 +6,7 @@
     "scripts": {
         "start": "npm run lint && npm run build && npm run test",
         "build": "ts-node publishScript.ts",
+        "publish": "npm run build && npm publish ./dist",
         "test": "cd test && npm run build",
         "lint": "eslint --ext .ts,.tsx . --fix --cache"
     },
