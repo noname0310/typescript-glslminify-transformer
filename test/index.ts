@@ -16,6 +16,16 @@ const glslWithMultiplePlaceholders = /* glsl */`
 `;
 glslWithMultiplePlaceholders;
 
+const injectStatement = /* glsl */ "gl_FragColor = vec4(vUv, 0.0, 1.0);";
+
+const placeHolderTest1 = /* glsl */`
+    gl_FragColor = vec4(vUv, ${1}, 1.0);
+
+    
+    ${injectStatement}
+    gl_FragColor = vec4(vUv, 0.0, 1.0);
+`;
+
 function foo(str: string): string {
     return str;
 }

@@ -50,22 +50,23 @@ class TransformerBuilder {
     }
 
     private _minifyGlslCode(code: string): string {
-        return code
-            .replace(/^\uFEFF/, "")
-            .replace(/\r\n/g, "\n")
-            .replace(/(\/\/)+.*$/gm, "")
-            .replace(/\t+/gm, " ")
-            .replace(/^\s+/gm, "")
-            // eslint-disable-next-line no-useless-escape
-            .replace(/ ([\*\/\=\+\-\>\<]+) /g, "$1")
-            .replace(/,[ ]/g, ",")
-            .replace(/ {1,}/g, " ")
-            // .replace(/;\s*/g, ";")
-            .replace(/^#(.*)/gm, "#$1\n")
-            .replace(/\{\n([^#])/g, "{$1")
-            .replace(/\n\}/g, "}")
-            .replace(/^(?:[\t ]*(?:\r?\n|\r))+/gm, "")
-            .replace(/;\n([^#])/g, ";$1");
+        return (code[0] === "\n" ? "\n" : "") + // preserve first newline
+            code
+                .replace(/^\uFEFF/, "")
+                .replace(/\r\n/g, "\n")
+                .replace(/(\/\/)+.*$/gm, "")
+                .replace(/\t+/gm, " ")
+                .replace(/^\s+/gm, "")
+                // eslint-disable-next-line no-useless-escape
+                .replace(/ ([\*\/\=\+\-\>\<]+) /g, "$1")
+                .replace(/,[ ]/g, ",")
+                .replace(/ {1,}/g, " ")
+                // .replace(/;\s*/g, ";")
+                .replace(/^#(.*)/gm, "#$1\n")
+                .replace(/\{\n([^#])/g, "{$1")
+                .replace(/\n\}/g, "}")
+                .replace(/^(?:[\t ]*(?:\r?\n|\r))+/gm, "")
+                .replace(/;\n([^#])/g, ";$1");
     }
 
     private _transformGlslMinify(
