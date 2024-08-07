@@ -30,11 +30,16 @@ class TsUtils {
 
 class TransformerBuilder {
     private readonly _program: ts.Program;
+    private readonly _prefixes: string[];
 
     public constructor(
-        program: ts.Program
+        program: ts.Program,
+        config?: TransformerConfig
     ) {
         this._program = program;
+
+        const customPrefixes = config?.customPrefixes ?? [ "glsl" ];
+        this._prefixes = customPrefixes.map(prefix => `/* ${prefix} */`);
 
         this._program; // for future use
     }
@@ -74,25 +79,36 @@ class TransformerBuilder {
         context: ts.TransformationContext
     ): ts.SourceFile {
         const visitor = (node: ts.Node): ts.Node => {
-            if ((ts.isStringLiteral(node) || ts.isTemplateLiteral(node)) && TsUtils.getNodeComment(node).includes("/* glsl */")) {
-                if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
-                    const minifiedCode = this._minifyGlslCode(node.getText().slice(1, -1));
-                    return factory.createStringLiteral(minifiedCode);
-                } else {
-                    const minifiedHeadText = this._minifyGlslCode(node.head.text);
-                    const minifiedTemplateHead = factory.createTemplateHead(minifiedHeadText);
-
-                    const minifiedTemplateSpans = node.templateSpans.slice(0, -1).map(templateSpan => {
-                        const minifiedText = this._minifyGlslCode(templateSpan.literal.text);
-                        return factory.createTemplateSpan(templateSpan.expression, factory.createTemplateMiddle(minifiedText));
-                    });
-                    {
-                        const templateSpan = node.templateSpans[node.templateSpans.length - 1];
-                        const minifiedText = this._minifyGlslCode(templateSpan.literal.text);
-                        minifiedTemplateSpans.push(factory.createTemplateSpan(templateSpan.expression, factory.createTemplateTail(minifiedText)));
+            if ((ts.isStringLiteral(node) || ts.isTemplateLiteral(node))) {
+                const comment = TsUtils.getNodeComment(node);
+                let isGlslLiteral = false;
+                for (let i = 0; i < this._prefixes.length; i++) {
+                    const prefix = this._prefixes[i];
+                    if (comment.includes(prefix)) {
+                        isGlslLiteral = true;
+                        break;
                     }
+                }
+                if (isGlslLiteral) {
+                    if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
+                        const minifiedCode = this._minifyGlslCode(node.getText().slice(1, -1));
+                        return factory.createStringLiteral(minifiedCode);
+                    } else {
+                        const minifiedHeadText = this._minifyGlslCode(node.head.text);
+                        const minifiedTemplateHead = factory.createTemplateHead(minifiedHeadText);
 
-                    return factory.createTemplateExpression(minifiedTemplateHead, minifiedTemplateSpans);
+                        const minifiedTemplateSpans = node.templateSpans.slice(0, -1).map(templateSpan => {
+                            const minifiedText = this._minifyGlslCode(templateSpan.literal.text);
+                            return factory.createTemplateSpan(templateSpan.expression, factory.createTemplateMiddle(minifiedText));
+                        });
+                        {
+                            const templateSpan = node.templateSpans[node.templateSpans.length - 1];
+                            const minifiedText = this._minifyGlslCode(templateSpan.literal.text);
+                            minifiedTemplateSpans.push(factory.createTemplateSpan(templateSpan.expression, factory.createTemplateTail(minifiedText)));
+                        }
+
+                        return factory.createTemplateExpression(minifiedTemplateHead, minifiedTemplateSpans);
+                    }
                 }
             }
             return ts.visitEachChild(node, visitor, context);
@@ -102,13 +118,11 @@ class TransformerBuilder {
 }
 
 export type TransformerConfig = {
-    // for future use
+    customPrefixes?: string[];
 };
 
 export default function transformer(program: ts.Program, config?: TransformerConfig): ts.TransformerFactory<ts.SourceFile> {
-    config; // for future use
-
-    const builder = new TransformerBuilder(program);
+    const builder = new TransformerBuilder(program, config);
     return builder.makeTransformer.bind(builder);
 }
 

@@ -20,7 +20,8 @@
     ],
     "ignorePatterns": [
         "dist",
-        "test"
+        "test",
+        "publishScript.ts"
     ],
     "rules": {
         "@typescript-eslint/consistent-type-imports": [

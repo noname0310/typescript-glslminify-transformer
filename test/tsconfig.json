@@ -24,7 +24,7 @@
             ]
         },
         "plugins": [
-            { "transform": "typescript-glslminify-transformer" }
+            { "transform": "typescript-glslminify-transformer", "customPrefixes": ["glsl"] }
         ],
         "outDir": "./dist"
     },

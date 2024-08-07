@@ -26,6 +26,16 @@ then use tspc to compile
 tspc
 ```
 
+if you want use other prefix than `/* glsl */`, you can pass it as options
+
+```json
+{
+    "compilerOptions": {
+        "plugins": [ { "transform": "typescript-glslminify-transformer", "customPrefixes": ["glsl", "wgsl"] } ]
+    }
+}
+```
+
 ## Example
 
 every string literal with `/* glsl */` comment will be minified
