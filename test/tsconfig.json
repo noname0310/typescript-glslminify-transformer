@@ -1,10 +1,10 @@
 {
     "compilerOptions": {
         "target": "ESNext",
-        "module": "ESNext",
+        "module": "NodeNext",
         "strict": true,
         "esModuleInterop": true,
-        "moduleResolution": "node",
+        "moduleResolution": "NodeNext",
         "forceConsistentCasingInFileNames": true,
         "noEmitOnError": true,
         "noImplicitAny": true,
@@ -17,10 +17,9 @@
             "./src/Types",
             "./node_modules/@types"
         ],
-        "baseUrl": "./src",
         "paths": {
             "@/*": [
-                "./*"
+                "./src/*"
             ]
         },
         "plugins": [
@@ -30,10 +29,5 @@
     },
     "exclude": [
         "dist"
-    ],
-    "ts-node": {
-        "compilerOptions": {
-            "module": "commonjs"
-        }
-    }
+    ]
 }

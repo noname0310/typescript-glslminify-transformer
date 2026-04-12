@@ -6,7 +6,7 @@ if (fs.existsSync("./dist")) {
 }
 
 try {
-    execSync("npx tspc");
+    execSync("npx tspc --project tsconfig.lib.json");
 } catch (error: any) {
     console.log(error.output.toString());
     process.exit(1);

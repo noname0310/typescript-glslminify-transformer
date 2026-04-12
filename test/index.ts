@@ -25,6 +25,7 @@ const placeHolderTest1 = /* glsl */`
     ${injectStatement}
     gl_FragColor = vec4(vUv, 0.0, 1.0);
 `;
+placeHolderTest1;
 
 function foo(str: string): string {
     return str;
@@ -87,3 +88,5 @@ class SomeClass {
         `);
     }
 }
+
+SomeClass;

@@ -2,13 +2,14 @@
     "name": "typescript-glslminify-transformer",
     "version": "0.0.3",
     "description": "typescript transformer that minify glsl string",
-    "main": "src/index.js",
+    "type": "module",
+    "main": "index.js",
     "scripts": {
         "start": "npm run lint && npm run build && npm run test",
         "build": "ts-node publishScript.ts",
         "publish:lib": "npm run build && npm publish ./dist",
         "test": "cd test && npm run build",
-        "lint": "eslint --ext .ts,.tsx . --fix --cache"
+        "lint": "eslint . --fix --cache"
     },
     "repository": {
         "type": "git",
@@ -21,15 +22,17 @@
     },
     "homepage": "https://github.com/noname0310/typescript-glslminify-transformer#readme",
     "devDependencies": {
-        "@types/node": "^20.10.4",
-        "@typescript-eslint/eslint-plugin": "^6.13.2",
-        "@typescript-eslint/parser": "^6.13.2",
-        "eslint": "^8.55.0",
-        "eslint-plugin-simple-import-sort": "^10.0.0",
-        "ts-node": "^10.9.1",
-        "ts-patch": "^3.1.1",
-        "typescript": "^5.3.3",
-        "typescript-transform-paths": "^3.4.6"
+        "@eslint/js": "^10.0.1",
+        "@stylistic/eslint-plugin": "^5.10.0",
+        "@types/node": "^25.6.0",
+        "eslint": "^10.2.0",
+        "eslint-plugin-simple-import-sort": "^13.0.0",
+        "globals": "^17.5.0",
+        "ts-node": "^10.9.2",
+        "ts-patch": "^3.3.0",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.58.1",
+        "typescript-transform-paths": "^3.5.6"
     },
     "keywords": [
         "webgl",
